@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include<unistd.h>
 
 #define IP "69.16.231.59" /* www.gooogle.se */
 #define PORT 80           /* HTTP */
@@ -27,4 +28,13 @@ int main()
     sock.sin_addr.s_addr = inet_addr(IP); // Store IP address of the target
     sock.sin_port = htons(PORT);          // Put in port, htons() converts to network byte order
     sock.sin_family = AF_INET;            // Address family
+
+    /* Connect to host */
+    // Socket file descriptor, socket address, size of the socket address
+    if (connect(s, (struct sockaddr *)&sock, sizeof(struct sockaddr_in)) != 0) // Connect to the target
+    {
+        printf("connect() error.\n");
+        close(s); // Close the socket
+        return -1;
+    };
 }
