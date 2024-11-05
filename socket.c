@@ -4,7 +4,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include<unistd.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define IP "69.16.231.59" /* www.gooogle.se */
 #define PORT 80           /* HTTP */
@@ -13,6 +15,10 @@ int main()
 {
     int s;                   // Socket return value
     struct sockaddr_in sock; // Store the socket IP address
+    char buf[512];
+    char *data;
+
+    data = "HEAD / HTTP/1.0\r\n\r\n"; // HTTP request
 
     /* Init socket */
     // Make a call for the socket
@@ -37,4 +43,14 @@ int main()
         close(s); // Close the socket
         return -1;
     };
+
+    /* Read & write data */
+    write(s, data, strlen(data)); // Write the data to the socket
+    memset(buf, 0, sizeof(buf));  // Clear the buffer
+    read(s, buf, sizeof(buf));    // Read the data from the socket
+    close(s);
+
+    printf("\n%s\n", buf); // Print the data
+
+    return 0;
 }
