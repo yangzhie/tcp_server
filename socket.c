@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define IP "69.16.231.59" /* www.gooogle.se */
+#define IP "98.137.11.164" /* www.yahoo.com */
 #define PORT 80           /* HTTP */
 
 int main()
